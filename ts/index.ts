@@ -2,6 +2,8 @@ import 'typings-global'
 import * as smartinject from 'smartinject'
 import * as smartipc from 'smartipc'
 import * as gulpFunction from 'gulp-function'
+import * as path from 'path'
+
 
 import { Transform } from 'stream'
 
@@ -50,10 +52,10 @@ export class Smartava {
       testableMessageFiles[file.path] = file.contents.toString()
     }
     let threadMessage = JSON.stringify(testableMessageFiles)
-    console.log(threadMessage)
+    smartipc.startSpawnWrap(path.join(__dirname, 'spawnhead.js'),[],{'SMARTINJECT': threadMessage})
     for (let testFile of this.testFiles) {
       let testThread = new smartipc.Thread(testFile.path)
-      testThread.send({}).catch(err => {
+      testThread.sendOnce({}).then((message) => {}).catch(err => {
         console.log('wow error:')
         console.log(err)
       })

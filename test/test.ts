@@ -28,5 +28,3 @@ Promise.all([testAblesReady.promise, testFilesReady.promise])
     console.log('ready')
     mySmartava.runTests()
   })
-
-console.log('hi')

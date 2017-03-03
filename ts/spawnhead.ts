@@ -2,7 +2,15 @@
 
 import * as smartinject from 'smartinject'
 
-export default (input, done) => {
-    console.log(input)
+let filesToInject = JSON.parse(process.env.SMARTINJECT)
+let fileArray: smartinject.fileObject[] = []
+for (let key in filesToInject) {
+  fileArray.push({
+    path: key,
+    contents: new Buffer(filesToInject[key])
+  })
 }
 
+smartinject.injectFileArray(fileArray)
+
+require('spawn-wrap').runMain()

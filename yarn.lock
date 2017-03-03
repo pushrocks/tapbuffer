@@ -1674,13 +1674,9 @@ ordered-read-streams@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/ordered-read-streams/-/ordered-read-streams-0.1.0.tgz#fd565a9af8eb4473ba69b6ed8a34352cb552f126"
 
-os-homedir@1.0.1:
+os-homedir@1.0.1, os-homedir@^1.0.0, os-homedir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.1.tgz#0d62bdf44b916fd3bbdcf2cab191948fb094f007"
-
-os-homedir@^1.0.0, os-homedir@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
 
 os-locale@^1.4.0:
   version "1.4.0"
@@ -2031,14 +2027,16 @@ smartinject@^1.0.1:
     typings-global "^1.0.14"
     typings-test "^1.0.3"
 
-smartipc@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/smartipc/-/smartipc-1.0.2.tgz#2518c31b63c6742a4c3140d299022e8ad1a2eb62"
+smartipc@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/smartipc/-/smartipc-1.0.4.tgz#998bfcdddffc521e814093c12e2860138bf5b934"
   dependencies:
     "@types/lodash" "^4.14.50"
     beautylog "^6.0.0"
     lodash "^4.17.4"
+    smartchai "^1.0.3"
     smartq "^1.1.0"
+    spawn-wrap "^1.3.4"
     threads "^0.7.2"
     typings-global "^1.0.14"
 
