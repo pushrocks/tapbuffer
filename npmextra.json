@@ -1,0 +1,8 @@
+{
+    "npmci": {
+        "globalNpmTools": [
+            "npmts",
+            "ts-node"
+        ]
+    }
+}
