@@ -6,19 +6,19 @@ import * as gulp from 'gulp'
 import * as smartq from 'smartq'
 import * as gulpFunction from 'gulp-function'
 
-let mySmartava = new smartava.Smartava()
+let myTabBuffer = new smartava.TabBuffer()
 
 let testAblesReady = smartq.defer()
 let testFilesReady = smartq.defer()
 
 gulp.src(path.join(__dirname, 'testablefiles/**/*.js'))
-  .pipe(mySmartava.pipeTestableFiles())
+  .pipe(myTabBuffer.pipeTestableFiles())
   .pipe(gulpFunction.atEnd(async () => {
     testAblesReady.resolve()
   }))
 
 gulp.src(path.join(__dirname, 'testfiles/**/*.js'))
-  .pipe(mySmartava.pipeTestFiles())
+  .pipe(myTabBuffer.pipeTestFiles())
   .pipe(gulpFunction.atEnd(async () => {
     testFilesReady.resolve()
   }))
@@ -26,5 +26,5 @@ gulp.src(path.join(__dirname, 'testfiles/**/*.js'))
 Promise.all([testAblesReady.promise, testFilesReady.promise])
   .then(() => {
     console.log('ready')
-    mySmartava.runTests()
+    myTabBuffer.runTests()
   })

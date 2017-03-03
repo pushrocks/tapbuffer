@@ -6,7 +6,7 @@ import { Transform } from 'stream';
 /**
  * Smartava class allows the setup of tests
  */
-export declare class Smartava {
+export declare class TabBuffer {
     testableFiles: smartinject.fileObject[];
     testFiles: smartinject.fileObject[];
     testThreads: smartipc.Thread[];
