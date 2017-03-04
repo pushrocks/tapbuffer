@@ -85,6 +85,7 @@ export class TabBuffer {
       }
       Reporter.add('text')
       Reporter.write(Collector, true, () => {
+        plugins.smartfile.fs.removeSync(plugins.path.join(process.cwd(), 'coverage'))
         done.resolve()
       })
     }).catch(err => {
