@@ -1,18 +1,20 @@
 import 'typings-global'
+import * as beautylog from 'beautylog'
+import * as gulpFunction from 'gulp-function'
+import * as istanbul from 'istanbul'
+import * as path from 'path'
+import * as smartfile from 'smartfile'
 import * as smartinject from 'smartinject'
 import * as smartipc from 'smartipc'
-import * as gulpFunction from 'gulp-function'
-import * as path from 'path'
 import * as smartq from 'smartq'
-import * as beautylog from 'beautylog'
-import * as istanbul from 'istanbul'
 
 export {
-  smartinject,
-  smartipc,
+  beautylog,
   gulpFunction,
+  istanbul,
   path,
   smartq,
-  beautylog,
-  istanbul
+  smartfile,
+  smartinject,
+  smartipc,
 }

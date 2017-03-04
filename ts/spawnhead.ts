@@ -3,7 +3,7 @@
 import * as smartinject from 'smartinject'
 import * as path from 'path'
 
-let testNumber = parseInt(process.argv[3], 10)
+let testNumber = parseInt(process.env.TESTNUMBER, 10)
 
 let istanbul = require('istanbul')
 
