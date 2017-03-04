@@ -4,8 +4,9 @@ import * as smartipc from 'smartipc'
 import * as gulpFunction from 'gulp-function'
 import * as path from 'path'
 import * as smartq from 'smartq'
-
 import { Transform } from 'stream'
+
+let tapMochaReporter = require('tap-mocha-reporter')
 
 /**
  * Smartava class allows the setup of tests
@@ -46,20 +47,21 @@ export class TabBuffer {
   /**
    * runs tests and returns coverage report
    */
-  runTests () {
+  runTests() {
     let done = smartq.defer()
     let testableMessageFiles: any = {}
     for (let file of this.testableFiles) {
-      testableMessageFiles[file.path] = file.contents.toString()
+      testableMessageFiles[ file.path ] = file.contents.toString()
     }
     let threadMessage = JSON.stringify(testableMessageFiles)
-    smartipc.startSpawnWrap(path.join(__dirname, 'spawnhead.js'),[],{'SMARTINJECT': threadMessage})
+    smartipc.startSpawnWrap(path.join(__dirname, 'spawnhead.js'), [], { 'SMARTINJECT': threadMessage })
     let testPromiseArray: Promise<any>[] = []
     for (let testFile of this.testFiles) {
-      let testThread = new smartipc.Thread(testFile.path)
-      let testPromise = testThread.sendOnce({}).then((message) => {}).catch(err => {
-        console.log('wow error:')
-        console.log(err)
+      let testThread = new smartipc.ThreadSimple(testFile.path, {silent: true})
+      let testPromise = testThread.run().then((childProcess) => {
+        childProcess.stdout.pipe(
+          tapMochaReporter('list')
+        )
       })
       testPromiseArray.push(testPromise)
     }

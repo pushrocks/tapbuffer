@@ -1,8 +1,13 @@
-let tap = require('tap')
+let {tap, expect} = require('tapbundle')
 
-console.log('howdy')
+let hey = 'wow'
 
-module.exports = (input, done) => {
-    console.log(input)
-    done(input)
-}
+tap.test('sometest',{}, function(test){
+    console.log(hey)
+    test.end()
+})
+
+tap.test('sometest2',{}, function(test){
+    console.log('howdy')
+    test.end()
+})
