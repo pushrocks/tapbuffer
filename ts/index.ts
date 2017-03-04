@@ -59,9 +59,14 @@ export class TabBuffer {
     for (let testFile of this.testFiles) {
       let testThread = new smartipc.ThreadSimple(testFile.path, {silent: true})
       let testPromise = testThread.run().then((childProcess) => {
+        let done = smartq.defer()
         childProcess.stdout.pipe(
           tapMochaReporter('list')
         )
+        childProcess.on('exit', function () {
+          done.resolve()
+        })
+        return done.promise
       })
       testPromiseArray.push(testPromise)
     }
