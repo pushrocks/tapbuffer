@@ -1,9 +1,5 @@
-import 'typings-global'
-import * as smartinject from 'smartinject'
-import * as smartipc from 'smartipc'
-import * as gulpFunction from 'gulp-function'
-import * as path from 'path'
-import * as smartq from 'smartq'
+import * as plugins from './tapbuffer.plugins'
+
 import { Transform } from 'stream'
 
 let tapMochaReporter = require('tap-mocha-reporter')
@@ -12,9 +8,9 @@ let tapMochaReporter = require('tap-mocha-reporter')
  * Smartava class allows the setup of tests
  */
 export class TabBuffer {
-  testableFiles: smartinject.fileObject[] = []
-  testFiles: smartinject.fileObject[] = []
-  testThreads: smartipc.Thread[]
+  testableFiles: plugins.smartinject.fileObject[] = []
+  testFiles: plugins.smartinject.fileObject[] = []
+  testThreads: plugins.smartipc.Thread[]
 	/**
 	 * the constructor of class Smartava
 	 */
@@ -28,7 +24,7 @@ export class TabBuffer {
    * You may transpile them beforehand 
    */
   pipeTestableFiles() {
-    return gulpFunction.forEach(async (file) => {
+    return plugins.gulpFunction.forEach(async (file) => {
       this.testableFiles.push(file)
     })
   }
@@ -39,7 +35,7 @@ export class TabBuffer {
    * Each spawned test file wile yet get injected any files to test
    */
   pipeTestFiles() {
-    return gulpFunction.forEach(async (file) => {
+    return plugins.gulpFunction.forEach(async (file) => {
       this.testFiles.push(file)
     })
   }
@@ -48,18 +44,28 @@ export class TabBuffer {
    * runs tests and returns coverage report
    */
   runTests() {
-    let done = smartq.defer()
+    let done = plugins.smartq.defer()
+    plugins.beautylog.log(
+      `---------------------------------------------\n`
+      + `-------------------- tapbuffer ----------------------\n`
+      + `-----------------------------------------------------`
+    )
+    plugins.beautylog.info(`received ${this.testableFiles.length} modulefile(s) for testing`)
+    plugins.beautylog.info(`received ${this.testFiles.length} test files`)
+    plugins.beautylog.info(`Coverage will be provided by istanbul`)
     let testableMessageFiles: any = {}
     for (let file of this.testableFiles) {
       testableMessageFiles[ file.path ] = file.contents.toString()
     }
     let threadMessage = JSON.stringify(testableMessageFiles)
-    smartipc.startSpawnWrap(path.join(__dirname, 'spawnhead.js'), [], { 'SMARTINJECT': threadMessage })
+    plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], { 'SMARTINJECT': threadMessage })
     let testPromiseArray: Promise<any>[] = []
+    let testCounter = 0
     for (let testFile of this.testFiles) {
-      let testThread = new smartipc.ThreadSimple(testFile.path, {silent: true})
+      testCounter++
+      let testThread = new plugins.smartipc.ThreadSimple(testFile.path,[`${testCounter.toString()}`], { silent: true })
       let testPromise = testThread.run().then((childProcess) => {
-        let done = smartq.defer()
+        let done = plugins.smartq.defer()
         childProcess.stdout.pipe(
           tapMochaReporter('list')
         )

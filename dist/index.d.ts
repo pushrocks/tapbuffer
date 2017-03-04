@@ -1,15 +1,13 @@
 /// <reference types="node" />
-import 'typings-global';
-import * as smartinject from 'smartinject';
-import * as smartipc from 'smartipc';
+import * as plugins from './tapbuffer.plugins';
 import { Transform } from 'stream';
 /**
  * Smartava class allows the setup of tests
  */
 export declare class TabBuffer {
-    testableFiles: smartinject.fileObject[];
-    testFiles: smartinject.fileObject[];
-    testThreads: smartipc.Thread[];
+    testableFiles: plugins.smartinject.fileObject[];
+    testFiles: plugins.smartinject.fileObject[];
+    testThreads: plugins.smartipc.Thread[];
     /**
      * the constructor of class Smartava
      */

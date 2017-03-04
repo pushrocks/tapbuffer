@@ -1,1 +1,3 @@
-console.log('hi')
+var that = 'here'
+
+exports.that = that
