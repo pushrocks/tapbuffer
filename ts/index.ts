@@ -45,6 +45,8 @@ export class TabBuffer {
    */
   runTests() {
     let done = plugins.smartq.defer()
+
+    // print some info
     plugins.beautylog.log(
       `---------------------------------------------\n`
       + `-------------------- tapbuffer ----------------------\n`
@@ -53,12 +55,26 @@ export class TabBuffer {
     plugins.beautylog.info(`received ${this.testableFiles.length} modulefile(s) for testing`)
     plugins.beautylog.info(`received ${this.testFiles.length} test files`)
     plugins.beautylog.info(`Coverage will be provided by istanbul`)
-    let testableMessageFiles: any = {}
+
+    // handle testableFiles
+    let testableFilesMessage: any = {}
     for (let file of this.testableFiles) {
-      testableMessageFiles[ file.path ] = file.contents.toString()
+      testableFilesMessage[ file.path ] = file.contents.toString()
     }
-    let threadMessage = JSON.stringify(testableMessageFiles)
-    plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], { 'SMARTINJECT': threadMessage })
+
+    // handle testFiles
+    let testFilesMessage: any = {}
+    for (let file of this.testFiles) {
+      testFilesMessage[ file.path ] = file.contents.toString()
+    }
+
+    // prepare injection handoff
+    let testableFilesJson = JSON.stringify(testableFilesMessage)
+    let testFilesJson = JSON.stringify(testFilesMessage)
+    plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], {
+      'TESTABLEFILESJSON': testableFilesJson,
+      'TESTFILESJSON': testFilesJson
+    })
     let testPromiseArray: Promise<any>[] = []
     let testCounter = 0
     for (let testFile of this.testFiles) {

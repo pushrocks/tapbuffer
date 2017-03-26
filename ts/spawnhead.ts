@@ -13,17 +13,32 @@ let localInstrumenter = new istanbul.Instrumenter({
 })
 let localCollector = new istanbul.Collector()
 let localReporter = new istanbul.Reporter(null, `coverage/test-${testNumber}`)
-let filesToInject = JSON.parse(process.env.SMARTINJECT)
+
+// handle testableFiles
+let testableFilesToInject = JSON.parse(process.env.TESTABLEFILESJSON)
 let fileArray: smartinject.fileObject[] = []
-for (let key in filesToInject) {
-  let fileContentString: string = filesToInject[key]
+for (let key in testableFilesToInject) {
+  let fileContentString: string = testableFilesToInject[key]
   let fileInstrumented: string = localInstrumenter.instrumentSync(fileContentString, key)
-  let fileContents = new Buffer(fileInstrumented)
+  let fileContentsBuffer = new Buffer(fileInstrumented)
 
   // push it to fileArray
   fileArray.push({
     path: key,
-    contents: new Buffer(fileContents)
+    contents: fileContentsBuffer
+  })
+}
+
+// handleTestFiles
+let testFilesToInject = JSON.parse(process.env.TESTFILESJSON)
+for (let key in testFilesToInject) {
+  let fileContentString: string = testFilesToInject[key]
+  let fileContentsBuffer = new Buffer(fileContentString)
+
+  // push it to fileArray
+  fileArray.push({
+    path: key,
+    contents: fileContentsBuffer
   })
 }
 
