@@ -43,8 +43,8 @@ export class TabBuffer {
   /**
    * runs tests and returns coverage report
    */
-  runTests() {
-    let done = plugins.smartq.defer()
+  runTests(): Promise<string> {
+    let done = plugins.smartq.defer<string>()
 
     // print some info
     plugins.beautylog.log(
@@ -99,10 +99,11 @@ export class TabBuffer {
       for (let smartfile of fileArray) {
         Collector.add(JSON.parse(smartfile.contents.toString()))
       }
-      Reporter.add('text')
+      Reporter.addAll(['text','lcovonly'])
       Reporter.write(Collector, true, () => {
+        let lcovInfo: string = plugins.smartfile.fs.toStringSync(plugins.path.join(process.cwd(), 'coverage/lcov.info'))
         plugins.smartfile.fs.removeSync(plugins.path.join(process.cwd(), 'coverage'))
-        done.resolve()
+        done.resolve(lcovInfo)
       })
     }).catch(err => {
       console.log(err)

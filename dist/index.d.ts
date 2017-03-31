@@ -27,5 +27,5 @@ export declare class TabBuffer {
     /**
      * runs tests and returns coverage report
      */
-    runTests(): Promise<{}>;
+    runTests(): Promise<string>;
 }
