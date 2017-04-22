@@ -1,6 +1,6 @@
 {
   "name": "tapbuffer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "node-tap for programmatic use",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
