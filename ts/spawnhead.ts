@@ -29,7 +29,7 @@ for (let key in testableFilesToInject) {
   })
 }
 
-// handleTestFiles
+// handle testFiles
 let testFilesToInject = JSON.parse(process.env.TESTFILESJSON)
 for (let key in testFilesToInject) {
   let fileContentString: string = testFilesToInject[key]
@@ -43,6 +43,14 @@ for (let key in testFilesToInject) {
 }
 
 smartinject.injectFileArray(fileArray)
+
+// handle parent env distribution
+let parentEnv = JSON.parse(process.env.PARENTENV)
+for (let key in parentEnv) {
+  if (!process.env[key]) {
+    process.env[key] = parentEnv[key]
+  }
+}
 
 process.on('exit', function () {
   localCollector.add(global['__coverage__'])

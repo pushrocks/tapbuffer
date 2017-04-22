@@ -71,9 +71,11 @@ export class TabBuffer {
     // prepare injection handoff
     let testableFilesJson = JSON.stringify(testableFilesMessage)
     let testFilesJson = JSON.stringify(testFilesMessage)
+    let parentEnv = JSON.stringify(process.env)
     plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], {
       'TESTABLEFILESJSON': testableFilesJson,
-      'TESTFILESJSON': testFilesJson
+      'TESTFILESJSON': testFilesJson,
+      'PARENTENV': parentEnv
     })
     let testPromiseArray: Promise<any>[] = []
     let testCounter = 0
