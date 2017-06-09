@@ -1,6 +1,6 @@
 // This file gets executed beforehand in every child spawned
 
-require('source-map-support').install()
+import * as smarterror from 'smarterror'
 import * as smartinject from 'smartinject'
 import * as path from 'path'
 

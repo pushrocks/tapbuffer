@@ -1,12 +1,12 @@
 import 'typings-global'
 
-import * as smartava from '../dist/index'
+import * as tapbuffer from '../dist/index'
 import * as path from 'path'
 import * as gulp from 'gulp'
 import * as smartq from 'smartq'
 import * as gulpFunction from 'gulp-function'
 
-let myTabBuffer = new smartava.TabBuffer()
+let myTabBuffer = new tapbuffer.TabBuffer()
 
 let testAblesReady = smartq.defer()
 let testFilesReady = smartq.defer()

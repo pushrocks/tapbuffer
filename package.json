@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "(npmts --notest && cd test/ && node test.js)"
+    "test": "(npmts --notest && ts-node --compilerOptions '{\"target\":\"es2015\"}' test/test.ts)"
   },
   "repository": {
     "type": "git",
@@ -30,11 +30,11 @@
     "beautylog": "^6.1.1",
     "gulp-function": "^2.2.3",
     "istanbul": "^0.4.5",
+    "smarterror": "^1.0.3",
     "smartfile": "^4.1.7",
     "smartinject": "^1.0.1",
     "smartipc": "^1.0.9",
     "smartq": "^1.1.1",
-    "source-map-support": "^0.4.15",
     "tap-mocha-reporter": "^3.0.3",
     "typings-global": "^1.0.14"
   },
