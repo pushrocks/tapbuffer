@@ -1,4 +1,5 @@
 import * as plugins from './tapbuffer.plugins'
+import * as tapbufferConfig from './tapbuffer.config'
 
 import { Transform } from 'stream'
 
@@ -11,19 +12,23 @@ export class TabBuffer {
   testableFiles: plugins.smartinject.fileObject[] = []
   testFiles: plugins.smartinject.fileObject[] = []
   testThreads: plugins.smartipc.Thread[]
+  testConfig: tapbufferConfig.IConfigOptions = {
+    parallel: true
+  }
+
 	/**
 	 * the constructor of class Smartava
 	 */
-  constructor() {
-
+  constructor () {
+    // nothing here
   }
 
   /**
    * accepts a gulp strams of files to test.
    * Each file is expected to be a module
-   * You may transpile them beforehand 
+   * You may transpile them beforehand
    */
-  pipeTestableFiles() {
+  pipeTestableFiles () {
     return plugins.gulpFunction.forEach(async (file) => {
       this.testableFiles.push(file)
     })
@@ -34,16 +39,20 @@ export class TabBuffer {
    * each test file is spawned as subprocess to speed up test execution.
    * Each spawned test file wile yet get injected any files to test
    */
-  pipeTestFiles() {
+  pipeTestFiles () {
     return plugins.gulpFunction.forEach(async (file) => {
       this.testFiles.push(file)
     })
   }
 
+  // allows to set a config
+  setConfig (testConfigArg: tapbufferConfig.IConfigOptions) {
+    this.testConfig = testConfigArg
+  }
   /**
    * runs tests and returns coverage report
    */
-  runTests(): Promise<string> {
+  async runTests (): Promise<string> {
     let done = plugins.smartq.defer<string>()
 
     // print some info
@@ -81,7 +90,7 @@ export class TabBuffer {
     let testCounter = 0
     for (let testFile of this.testFiles) {
       testCounter++
-      let testThread = new plugins.smartipc.ThreadSimple(testFile.path,[], { silent: true, env: {TESTNUMBER: `${testCounter.toString()}`} })
+      let testThread = new plugins.smartipc.ThreadSimple(testFile.path, [], { silent: true, env: { TESTNUMBER: `${testCounter.toString()}` } })
       let testPromise = testThread.run().then((childProcess) => {
         let done = plugins.smartq.defer()
         childProcess.stdout.pipe(
@@ -92,6 +101,9 @@ export class TabBuffer {
         })
         return done.promise
       })
+      if (!this.testConfig.parallel) {
+        await testPromise
+      }
       testPromiseArray.push(testPromise)
     }
     Promise.all(testPromiseArray).then(async () => {
@@ -101,7 +113,7 @@ export class TabBuffer {
       for (let smartfile of fileArray) {
         Collector.add(JSON.parse(smartfile.contents.toString()))
       }
-      Reporter.addAll(['text','lcovonly'])
+      Reporter.addAll([ 'text', 'lcovonly' ])
       Reporter.write(Collector, true, () => {
         let lcovInfo: string = plugins.smartfile.fs.toStringSync(plugins.path.join(process.cwd(), 'coverage/lcov.info'))
         plugins.smartfile.fs.removeSync(plugins.path.join(process.cwd(), 'coverage'))
@@ -110,6 +122,6 @@ export class TabBuffer {
     }).catch(err => {
       console.log(err)
     })
-    return done.promise
+    return await done.promise
   }
 }

@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import * as plugins from './tapbuffer.plugins';
+import * as tapbufferConfig from './tapbuffer.config';
 import { Transform } from 'stream';
 /**
  * Smartava class allows the setup of tests
@@ -8,6 +9,7 @@ export declare class TabBuffer {
     testableFiles: plugins.smartinject.fileObject[];
     testFiles: plugins.smartinject.fileObject[];
     testThreads: plugins.smartipc.Thread[];
+    testConfig: tapbufferConfig.IConfigOptions;
     /**
      * the constructor of class Smartava
      */
@@ -24,6 +26,7 @@ export declare class TabBuffer {
      * Each spawned test file wile yet get injected any files to test
      */
     pipeTestFiles(): Transform;
+    setConfig(testConfigArg: tapbufferConfig.IConfigOptions): void;
     /**
      * runs tests and returns coverage report
      */
