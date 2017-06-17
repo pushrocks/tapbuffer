@@ -91,6 +91,10 @@ export class TabBuffer {
     for (let testFile of this.testFiles) {
       testCounter++
       let testThread = new plugins.smartipc.ThreadSimple(testFile.path, [], { silent: true, env: { TESTNUMBER: `${testCounter.toString()}` } })
+      let parsedPath = plugins.path.parse(testFile.path)
+      console.log('=======')
+      plugins.beautylog.log(`-------------- ${parsedPath.name} --------------`)
+      console.log('=======')
       let testPromise = testThread.run().then((childProcess) => {
         let done = plugins.smartq.defer()
         childProcess.stdout.pipe(
@@ -101,6 +105,8 @@ export class TabBuffer {
         })
         return done.promise
       })
+
+      // wait for tests to complete if not running parallel
       if (!this.testConfig.parallel) {
         await testPromise
       }
