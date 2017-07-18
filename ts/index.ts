@@ -81,7 +81,7 @@ export class TabBuffer {
     let testableFilesJson = JSON.stringify(testableFilesMessage)
     let testFilesJson = JSON.stringify(testFilesMessage)
     let parentEnv = JSON.stringify(process.env)
-    let parentShellPath = plugins.smartshell.execSilent(`echo $PATH`)
+    let parentShellPath = (await plugins.smartshell.execSilent(`echo $PATH`)).stdout
     plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], {
       'TESTABLEFILES_JSON': testableFilesJson,
       'TESTFILES_JSON': testFilesJson,
