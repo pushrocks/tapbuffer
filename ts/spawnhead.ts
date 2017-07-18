@@ -16,7 +16,7 @@ let localCollector = new istanbul.Collector()
 let localReporter = new istanbul.Reporter(null, `coverage/test-${testNumber}`)
 
 // handle testableFiles
-let testableFilesToInject = JSON.parse(process.env.TESTABLEFILESJSON)
+let testableFilesToInject = JSON.parse(process.env.TESTABLEFILES_JSON)
 let fileArray: smartinject.fileObject[] = []
 for (let key in testableFilesToInject) {
   let fileContentString: string = testableFilesToInject[key]
@@ -31,7 +31,7 @@ for (let key in testableFilesToInject) {
 }
 
 // handle testFiles
-let testFilesToInject = JSON.parse(process.env.TESTFILESJSON)
+let testFilesToInject = JSON.parse(process.env.TESTFILES_JSON)
 for (let key in testFilesToInject) {
   let fileContentString: string = testFilesToInject[key]
   let fileContentsBuffer = new Buffer(fileContentString)
@@ -46,13 +46,17 @@ for (let key in testFilesToInject) {
 smartinject.injectFileArray(fileArray)
 
 // handle parent env distribution
-let parentEnv = JSON.parse(process.env.PARENTENV)
+let parentEnv = JSON.parse(process.env.PARENT_ENV)
 for (let key in parentEnv) {
   if (!process.env[key]) {
     process.env[key] = parentEnv[key]
   }
 }
 
+// handle Shell Path distribution
+process.env.SMARTSHELL_PATH = process.env.PARENT_SHELLPATH
+
+// handle exit
 process.on('exit', function () {
   localCollector.add(global['__coverage__'])
   localReporter.add('json')

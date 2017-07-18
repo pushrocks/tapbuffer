@@ -81,10 +81,12 @@ export class TabBuffer {
     let testableFilesJson = JSON.stringify(testableFilesMessage)
     let testFilesJson = JSON.stringify(testFilesMessage)
     let parentEnv = JSON.stringify(process.env)
+    let parentShellPath = plugins.smartshell.execSilent(`echo $PATH`)
     plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], {
-      'TESTABLEFILESJSON': testableFilesJson,
-      'TESTFILESJSON': testFilesJson,
-      'PARENTENV': parentEnv
+      'TESTABLEFILES_JSON': testableFilesJson,
+      'TESTFILES_JSON': testFilesJson,
+      'PARENT_ENV': parentEnv,
+      'PARENT_SHELLPATH': parentShellPath
     })
     let testPromiseArray: Promise<any>[] = []
     let testCounter = 0

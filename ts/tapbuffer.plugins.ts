@@ -7,6 +7,7 @@ import * as smartfile from 'smartfile'
 import * as smartinject from 'smartinject'
 import * as smartipc from 'smartipc'
 import * as smartq from 'smartq'
+import * as smartshell from 'smartshell'
 
 export {
   beautylog,
@@ -17,4 +18,5 @@ export {
   smartfile,
   smartinject,
   smartipc,
+  smartshell
 }

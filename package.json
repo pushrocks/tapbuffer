@@ -35,6 +35,7 @@
     "smartinject": "^1.0.1",
     "smartipc": "^1.0.9",
     "smartq": "^1.1.1",
+    "smartshell": "^1.0.9",
     "tap-mocha-reporter": "^3.0.3",
     "typings-global": "^1.0.14"
   },

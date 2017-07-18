@@ -7,4 +7,5 @@ import * as smartfile from 'smartfile';
 import * as smartinject from 'smartinject';
 import * as smartipc from 'smartipc';
 import * as smartq from 'smartq';
-export { beautylog, gulpFunction, istanbul, path, smartq, smartfile, smartinject, smartipc };
+import * as smartshell from 'smartshell';
+export { beautylog, gulpFunction, istanbul, path, smartq, smartfile, smartinject, smartipc, smartshell };
