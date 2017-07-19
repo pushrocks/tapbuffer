@@ -48,13 +48,13 @@ smartinject.injectFileArray(fileArray)
 // handle parent env distribution
 let parentEnv = JSON.parse(process.env.PARENT_ENV)
 for (let key in parentEnv) {
-  if (!process.env[key]) {
+  if (!process.env[key] || key === 'PATH' ) {
     process.env[key] = parentEnv[key]
   }
 }
 
 // handle Shell Path distribution
-process.env.SMARTSHELL_PATH = process.env.PARENT_SHELLPATH
+// process.env.SMARTSHELL_PATH = process.env.PARENT_SHELLPATH
 
 // handle exit
 process.on('exit', function () {

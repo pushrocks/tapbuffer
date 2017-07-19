@@ -86,8 +86,7 @@ export class TabBuffer {
     plugins.smartipc.startSpawnWrap(plugins.path.join(__dirname, 'spawnhead.js'), [], {
       'TESTABLEFILES_JSON': testableFilesJson,
       'TESTFILES_JSON': testFilesJson,
-      'PARENT_ENV': parentEnv,
-      'PARENT_SHELLPATH': parentShellPath
+      'PARENT_ENV': parentEnv
     })
     let testPromiseArray: Promise<any>[] = []
     let testCounter = 0
