@@ -4,6 +4,7 @@ import * as gulpFunction from 'gulp-function'
 import * as istanbul from 'istanbul'
 import * as path from 'path'
 import * as smartfile from 'smartfile'
+import * as remapIstanbul from 'remap-istanbul'
 import * as smartinject from 'smartinject'
 import * as smartipc from 'smartipc'
 import * as smartq from 'smartq'
@@ -15,6 +16,7 @@ export {
   istanbul,
   path,
   smartq,
+  remapIstanbul,
   smartfile,
   smartinject,
   smartipc,

@@ -11,6 +11,8 @@ const path = require("path");
 exports.path = path;
 const smartfile = require("smartfile");
 exports.smartfile = smartfile;
+const remapIstanbul = require("remap-istanbul");
+exports.remapIstanbul = remapIstanbul;
 const smartinject = require("smartinject");
 exports.smartinject = smartinject;
 const smartipc = require("smartipc");
@@ -19,4 +21,4 @@ const smartq = require("smartq");
 exports.smartq = smartq;
 const smartshell = require("smartshell");
 exports.smartshell = smartshell;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGFwYnVmZmVyLnBsdWdpbnMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi90cy90YXBidWZmZXIucGx1Z2lucy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDBCQUF1QjtBQUN2Qix1Q0FBc0M7QUFXcEMsOEJBQVM7QUFWWCw4Q0FBNkM7QUFXM0Msb0NBQVk7QUFWZCxxQ0FBb0M7QUFXbEMsNEJBQVE7QUFWViw2QkFBNEI7QUFXMUIsb0JBQUk7QUFWTix1Q0FBc0M7QUFZcEMsOEJBQVM7QUFYWCwyQ0FBMEM7QUFZeEMsa0NBQVc7QUFYYixxQ0FBb0M7QUFZbEMsNEJBQVE7QUFYVixpQ0FBZ0M7QUFROUIsd0JBQU07QUFQUix5Q0FBd0M7QUFXdEMsZ0NBQVUifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGFwYnVmZmVyLnBsdWdpbnMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi90cy90YXBidWZmZXIucGx1Z2lucy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDBCQUF1QjtBQUN2Qix1Q0FBc0M7QUFZcEMsOEJBQVM7QUFYWCw4Q0FBNkM7QUFZM0Msb0NBQVk7QUFYZCxxQ0FBb0M7QUFZbEMsNEJBQVE7QUFYViw2QkFBNEI7QUFZMUIsb0JBQUk7QUFYTix1Q0FBc0M7QUFjcEMsOEJBQVM7QUFiWCxnREFBK0M7QUFZN0Msc0NBQWE7QUFYZiwyQ0FBMEM7QUFheEMsa0NBQVc7QUFaYixxQ0FBb0M7QUFhbEMsNEJBQVE7QUFaVixpQ0FBZ0M7QUFROUIsd0JBQU07QUFQUix5Q0FBd0M7QUFZdEMsZ0NBQVUifQ==

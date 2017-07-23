@@ -30,6 +30,7 @@
     "beautylog": "^6.1.10",
     "gulp-function": "^2.2.9",
     "istanbul": "^0.4.5",
+    "remap-istanbul": "^0.9.5",
     "smarterror": "^1.0.3",
     "smartfile": "^4.2.17",
     "smartinject": "^1.0.1",
