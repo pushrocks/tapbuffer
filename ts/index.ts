@@ -118,9 +118,23 @@ export class TabBuffer {
       let Collector = new plugins.istanbul.Collector()
       let Reporter = new plugins.istanbul.Reporter()
       let fileArray = await plugins.smartfile.fs.fileTreeToObject(process.cwd(), 'coverage/**/coverage-final.json')
+
+      // remap the output
+      let remapArray: string[] = []
       for (let smartfile of fileArray) {
-        Collector.add(JSON.parse(smartfile.contents.toString()))
+        remapArray.push(smartfile.path)
       }
+      let remapCoverage = plugins.remapIstanbul_load(remapArray)
+      let remappedCollector = plugins.remapIstanbul_remap(remapCoverage)
+      let remappedJsonPath = plugins.path.resolve('coverage-final.json')
+      await plugins.remapIstanbul_write(remappedCollector, 'json', remappedJsonPath)
+
+      Collector.add(
+        plugins.smartfile.fs.toObjectSync(remappedJsonPath)
+      )
+
+      await plugins.smartfile.fs.remove(remappedJsonPath)
+
       Reporter.addAll([ 'text', 'lcovonly' ])
       Reporter.write(Collector, true, () => {
         let lcovInfo: string = plugins.smartfile.fs.toStringSync(plugins.path.join(process.cwd(), 'coverage/lcov.info'))
