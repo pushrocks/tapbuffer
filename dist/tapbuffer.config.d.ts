@@ -1,3 +1,4 @@
 export interface IConfigOptions {
-    parallel: boolean;
+    coverage?: boolean;
+    parallel?: boolean;
 }

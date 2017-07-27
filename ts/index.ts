@@ -1,9 +1,12 @@
 import * as plugins from './tapbuffer.plugins'
 import * as tapbufferConfig from './tapbuffer.config'
+export * from './tapbuffer.config'
 
 import { Transform } from 'stream'
 
 let tapMochaReporter = require('tap-mocha-reporter')
+
+// interfaces
 
 /**
  * Smartava class allows the setup of tests
@@ -13,13 +16,14 @@ export class TabBuffer {
   testFiles: plugins.smartinject.fileObject[] = []
   testThreads: plugins.smartipc.Thread[]
   testConfig: tapbufferConfig.IConfigOptions = {
-    parallel: true
+    parallel: true,
+    coverage: true
   }
 
 	/**
 	 * the constructor of class Smartava
 	 */
-  constructor () {
+  constructor() {
     // nothing here
   }
 
@@ -47,7 +51,7 @@ export class TabBuffer {
 
   // allows to set a config
   setConfig (testConfigArg: tapbufferConfig.IConfigOptions) {
-    this.testConfig = testConfigArg
+    this.testConfig = plugins.smartlodash.merge(this.testConfig, testConfigArg)
   }
   /**
    * runs tests and returns coverage report
@@ -118,29 +122,30 @@ export class TabBuffer {
       let Collector = new plugins.istanbul.Collector()
       let Reporter = new plugins.istanbul.Reporter()
       let fileArray = await plugins.smartfile.fs.fileTreeToObject(process.cwd(), 'coverage/**/coverage-final.json')
+      if (this.testConfig.coverage) {
+        // remap the output
+        let remapArray: string[] = []
+        for (let smartfile of fileArray) {
+          remapArray.push(smartfile.path)
+        }
+        let remapCoverage = plugins.remapIstanbul_load(remapArray)
+        let remappedCollector = plugins.remapIstanbul_remap(remapCoverage)
+        let remappedJsonPath = plugins.path.resolve('coverage-final.json')
+        await plugins.remapIstanbul_write(remappedCollector, 'json', remappedJsonPath)
 
-      // remap the output
-      let remapArray: string[] = []
-      for (let smartfile of fileArray) {
-        remapArray.push(smartfile.path)
+        Collector.add(
+          plugins.smartfile.fs.toObjectSync(remappedJsonPath)
+        )
+
+        await plugins.smartfile.fs.remove(remappedJsonPath)
+
+        Reporter.addAll([ 'text', 'lcovonly' ])
+        Reporter.write(Collector, true, () => {
+          let lcovInfo: string = plugins.smartfile.fs.toStringSync(plugins.path.join(process.cwd(), 'coverage/lcov.info'))
+          plugins.smartfile.fs.removeSync(plugins.path.join(process.cwd(), 'coverage'))
+          done.resolve(lcovInfo)
+        })
       }
-      let remapCoverage = plugins.remapIstanbul_load(remapArray)
-      let remappedCollector = plugins.remapIstanbul_remap(remapCoverage)
-      let remappedJsonPath = plugins.path.resolve('coverage-final.json')
-      await plugins.remapIstanbul_write(remappedCollector, 'json', remappedJsonPath)
-
-      Collector.add(
-        plugins.smartfile.fs.toObjectSync(remappedJsonPath)
-      )
-
-      await plugins.smartfile.fs.remove(remappedJsonPath)
-
-      Reporter.addAll([ 'text', 'lcovonly' ])
-      Reporter.write(Collector, true, () => {
-        let lcovInfo: string = plugins.smartfile.fs.toStringSync(plugins.path.join(process.cwd(), 'coverage/lcov.info'))
-        plugins.smartfile.fs.removeSync(plugins.path.join(process.cwd(), 'coverage'))
-        done.resolve(lcovInfo)
-      })
     }).catch(err => {
       console.log(err)
     })

@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import * as plugins from './tapbuffer.plugins';
 import * as tapbufferConfig from './tapbuffer.config';
+export * from './tapbuffer.config';
 import { Transform } from 'stream';
 /**
  * Smartava class allows the setup of tests
