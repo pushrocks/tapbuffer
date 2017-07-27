@@ -51,7 +51,7 @@ export class TabBuffer {
 
   // allows to set a config
   setConfig (testConfigArg: tapbufferConfig.IConfigOptions) {
-    this.testConfig = plugins.smartlodash.merge(this.testConfig, testConfigArg)
+    this.testConfig = Object.assign(this.testConfig, testConfigArg)
   }
   /**
    * runs tests and returns coverage report

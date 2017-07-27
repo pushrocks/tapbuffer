@@ -9,7 +9,6 @@ import * as remapIstanbul_remap from 'remap-istanbul/lib/remap';
 import * as remapIstanbul_write from 'remap-istanbul/lib/writeReport';
 import * as smartinject from 'smartinject';
 import * as smartipc from 'smartipc';
-import smartlodash from 'smartlodash';
 import * as smartq from 'smartq';
 import * as smartshell from 'smartshell';
-export { beautylog, gulpFunction, istanbul, path, remapIstanbul_load, remapIstanbul_remap, remapIstanbul_write, smartfile, smartinject, smartipc, smartlodash, smartq, smartshell };
+export { beautylog, gulpFunction, istanbul, path, remapIstanbul_load, remapIstanbul_remap, remapIstanbul_write, smartfile, smartinject, smartipc, smartq, smartshell };
