@@ -10,7 +10,7 @@ export declare class TabBuffer {
     testableFiles: plugins.smartinject.fileObject[];
     testFiles: plugins.smartinject.fileObject[];
     testThreads: plugins.smartipc.Thread[];
-    testConfig: tapbufferConfig.IConfigOptions;
+    testConfig: tapbufferConfig.ITapbufferConfig;
     /**
      * the constructor of class Smartava
      */
@@ -27,7 +27,7 @@ export declare class TabBuffer {
      * Each spawned test file wile yet get injected any files to test
      */
     pipeTestFiles(): Transform;
-    setConfig(testConfigArg: tapbufferConfig.IConfigOptions): void;
+    setConfig(testConfigArg: tapbufferConfig.ITapbufferConfig): void;
     /**
      * runs tests and returns coverage report
      */

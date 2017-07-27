@@ -1,6 +1,6 @@
 import * as plugins from './tapbuffer.plugins'
 
-export interface IConfigOptions {
+export interface ITapbufferConfig {
   coverage?: boolean,
   parallel?: boolean
 }

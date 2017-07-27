@@ -15,7 +15,7 @@ export class TabBuffer {
   testableFiles: plugins.smartinject.fileObject[] = []
   testFiles: plugins.smartinject.fileObject[] = []
   testThreads: plugins.smartipc.Thread[]
-  testConfig: tapbufferConfig.IConfigOptions = {
+  testConfig: tapbufferConfig.ITapbufferConfig = {
     parallel: true,
     coverage: true
   }
@@ -50,7 +50,7 @@ export class TabBuffer {
   }
 
   // allows to set a config
-  setConfig (testConfigArg: tapbufferConfig.IConfigOptions) {
+  setConfig (testConfigArg: tapbufferConfig.ITapbufferConfig) {
     this.testConfig = Object.assign(this.testConfig, testConfigArg)
   }
   /**
