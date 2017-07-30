@@ -7,13 +7,14 @@ import { Transform } from 'stream'
 let tapMochaReporter = require('tap-mocha-reporter')
 
 // interfaces
+import { Smartfile } from 'smartfile'
 
 /**
  * Smartava class allows the setup of tests
  */
 export class TabBuffer {
-  testableFiles = []
-  testFiles = []
+  testableFiles: Smartfile[] = []
+  testFiles: Smartfile[] = []
   testThreads: plugins.smartipc.Thread[]
   testConfig: tapbufferConfig.ITapbufferConfig = {
     parallel: true,
@@ -129,7 +130,16 @@ export class TabBuffer {
           remapArray.push(smartfile.path)
         }
         let remapCoverage = plugins.remapIstanbul_load(remapArray)
-        let remappedCollector = plugins.remapIstanbul_remap(remapCoverage)
+        let remappedCollector = plugins.remapIstanbul_remap(remapCoverage, {
+          readFile: (filePath: string) => {
+            let localSmartfile = this.testableFiles.find(itemArg => {
+              if (itemArg.path === filePath) {
+                return true
+              }
+            })
+            return localSmartfile.contents.toString()
+          }
+        })
         let remappedJsonPath = plugins.path.resolve('coverage-final.json')
         await plugins.remapIstanbul_write(remappedCollector, 'json', remappedJsonPath)
 
