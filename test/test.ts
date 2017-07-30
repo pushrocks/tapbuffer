@@ -1,5 +1,4 @@
 import 'typings-global'
-
 import * as tapbuffer from '../dist/index'
 import * as path from 'path'
 import * as gulp from 'gulp'

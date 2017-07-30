@@ -12,8 +12,8 @@ let tapMochaReporter = require('tap-mocha-reporter')
  * Smartava class allows the setup of tests
  */
 export class TabBuffer {
-  testableFiles: plugins.smartinject.fileObject[] = []
-  testFiles: plugins.smartinject.fileObject[] = []
+  testableFiles = []
+  testFiles = []
   testThreads: plugins.smartipc.Thread[]
   testConfig: tapbufferConfig.ITapbufferConfig = {
     parallel: true,
@@ -23,7 +23,7 @@ export class TabBuffer {
 	/**
 	 * the constructor of class Smartava
 	 */
-  constructor() {
+  constructor () {
     // nothing here
   }
 

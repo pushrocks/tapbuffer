@@ -7,8 +7,8 @@ import { Transform } from 'stream';
  * Smartava class allows the setup of tests
  */
 export declare class TabBuffer {
-    testableFiles: plugins.smartinject.fileObject[];
-    testFiles: plugins.smartinject.fileObject[];
+    testableFiles: any[];
+    testFiles: any[];
     testThreads: plugins.smartipc.Thread[];
     testConfig: tapbufferConfig.ITapbufferConfig;
     /**

@@ -64,4 +64,8 @@ process.on('exit', function () {
   })
 })
 
-require('spawn-wrap').runMain()
+try {
+  require('spawn-wrap').runMain()
+} catch (err) {
+  console.log(err)
+}
